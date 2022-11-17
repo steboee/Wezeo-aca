@@ -33,6 +33,9 @@ if(array_key_exists('Log', $_POST)) {
   getLog();
 }
 
+
+
+
 if (isset($_POST['username'])) {
   $user = $_POST['username'];
 }
