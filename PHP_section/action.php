@@ -1,7 +1,5 @@
 <?php
 
-
-
 function log_user($date,$user,$delayed) {
   $file = "logfile.log";
   $data = $date->format('Y-m-d H:i:s') . " | ".$user." | ";
@@ -53,9 +51,5 @@ if ($user){
 
   log_user($date,$user,$delayed);
 }
-
-
-
-
 
 ?>
