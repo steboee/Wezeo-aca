@@ -1,8 +1,8 @@
 <?php
 
-function log_user($date,$user,$delayed) {
+function log_user($now,$user,$delayed) {
   $file = "logfile.log";
-  $data = $date->format('Y-m-d H:i:s') . " | ".$user." | ";
+  $data = $now->format('Y-m-d H:i:s') . " | ".$user." | ";
   file_put_contents($file, $data, FILE_APPEND);
   if ($delayed) {
     add_delay($file);
@@ -16,8 +16,8 @@ function add_delay($file){
 
 
 function IsDelayed($now){
-  $delay = new DateTime("08:00:00");
-  if ($now > $delay) {
+  $delay_breakpoint = new DateTime("08:00:00");
+  if ($now > $delay_breakpoint) {
     return true;
   }
   return false;
@@ -40,16 +40,17 @@ else{
   $user = $_GET['username'];
 }
 
-if ($user){
-  $date = new DateTime();
+if ($user) {
+  //
+  $now = new DateTime();
 
-  if ($date > new DateTime("20:00")){
+  if ($now > new DateTime("20:00")){
     return die("You are late");
   }
 
-  $delayed = IsDelayed($date);
+  $delayed = IsDelayed($now);
 
-  log_user($date,$user,$delayed);
+  log_user($now,$user,$delayed);
 }
 
 ?>
