@@ -60,10 +60,9 @@ Class Student{
 
 Class Prichod{
   // store prichody in prichody.json
-  public static function store_prichod()
+  public function store_prichod()
   {
-    // if now() is after 8:00 delay then delay = True else delay = False
-    $delay = (new DateTime())->format('H:i:s') > '08:00:00' ? true : false;
+    $delay = $this::check_delay();
     if (file_exists('prichody.json')) {
       $current_data = file_get_contents('prichody.json');
       $array_data = json_decode($current_data, true);
@@ -91,6 +90,20 @@ Class Prichod{
     
   }
 
+  private function check_delay()
+  {
+    return new Datetime() > '08:00:00' ? true : false;
+  }
+
+  //display prichody.json file
+  public static function print_results()
+  {
+    $current_data = file_get_contents('prichody.json');
+    $array_data = json_decode($current_data, true);
+    foreach ($array_data as $key => $value) {
+      print_r($value['time']." ".$value['delay']."<br>");
+    }
+  }
 
 }
 
@@ -111,6 +124,8 @@ function IsDelayed($now){
 
 function getlog(){
   Student::print_results();
+  echo(" <br> <br> ");
+  Prichod::print_results();
 }
 
 if(array_key_exists('Log', $_POST)) {
