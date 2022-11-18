@@ -8,7 +8,57 @@ function log_user($now,$user,$delayed) {
     add_delay($file);
   }
   file_put_contents($file, PHP_EOL, FILE_APPEND);
+
+  Store::store_student($user);
+
 }
+
+
+Class Store{
+
+
+  //store student in studenti.json
+  public static function store_student($name)
+  {
+    if (file_exists('studenti.json')) {
+      $current_data = file_get_contents('studenti.json');
+      $array_data = json_decode($current_data, true);
+      $new_id = count($array_data);
+      $extra = array(
+        "id" => $new_id,
+        "name"               =>     $name,
+      );
+      $array_data[] = $extra;
+      $final_data = json_encode($array_data);
+      file_put_contents('studenti.json', $final_data);
+    }
+    else{
+      $file=fopen("studenti.json","w");
+      $array_data=array();
+      $extra = array(
+        "id" => 0,
+        "name"               =>     $name,
+      );
+      $array_data[] = $extra;
+      $final_data = json_encode($array_data);
+      fwrite($file, $final_data);
+      fclose($file);
+    }
+    
+  }
+
+  //display studenti.json file
+  public static function print_results()
+  {
+    $current_data = file_get_contents('studenti.json');
+    $array_data = json_decode($current_data, true);
+    foreach ($array_data as $key => $value) {
+      print_r($value['id']." ".$value['name']."<br>");
+    }
+  }
+}
+
+
 
 function add_delay($file){
   file_put_contents($file, "Student was deleyed",FILE_APPEND);
@@ -24,16 +74,14 @@ function IsDelayed($now){
 }
 
 function getlog(){
-  $file = "logfile.log";
-  $log = file_get_contents($file);
-  echo $log;
+  Store::print_results();
 }
 
 if(array_key_exists('Log', $_POST)) {
   getLog();
 }
 
-
+$user = NULL;
 
 
 if (isset($_POST['username'])) {
