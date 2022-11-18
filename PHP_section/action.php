@@ -4,19 +4,19 @@ function log_user($now,$user,$delayed) {
   $file = "logfile.log";
   $data = $now->format('Y-m-d H:i:s') . " | ".$user." | ";
   file_put_contents($file, $data, FILE_APPEND);
+  $prichod = new Prichod();
+  $prichod->store_prichod();
   if ($delayed) {
     add_delay($file);
   }
   file_put_contents($file, PHP_EOL, FILE_APPEND);
 
-  Store::store_student($user);
+  Student::store_student($user);
 
 }
 
 
-Class Store{
-
-
+Class Student{
   //store student in studenti.json
   public static function store_student($name)
   {
@@ -58,6 +58,42 @@ Class Store{
   }
 }
 
+Class Prichod{
+  // store prichody in prichody.json
+  public static function store_prichod()
+  {
+    // if now() is after 8:00 delay then delay = True else delay = False
+    $delay = (new DateTime())->format('H:i:s') > '08:00:00' ? true : false;
+    if (file_exists('prichody.json')) {
+      $current_data = file_get_contents('prichody.json');
+      $array_data = json_decode($current_data, true);
+      $new_id = count($array_data);
+      $extra = array(
+        "time" => date("Y-m-d H:i:s"),
+        "delay" => $delay,
+      );
+      $array_data[] = $extra;
+      $final_data = json_encode($array_data);
+      file_put_contents('prichody.json', $final_data);
+    }
+    else{
+      $file=fopen("prichody.json","w");
+      $array_data=array();
+      $extra = array(
+        "time" => date("Y-m-d H:i:s"),
+        "delay" => $delay,
+      );
+      $array_data[] = $extra;
+      $final_data = json_encode($array_data);
+      fwrite($file, $final_data);
+      fclose($file);
+    }
+    
+  }
+
+
+}
+
 
 
 function add_delay($file){
@@ -74,7 +110,7 @@ function IsDelayed($now){
 }
 
 function getlog(){
-  Store::print_results();
+  Student::print_results();
 }
 
 if(array_key_exists('Log', $_POST)) {
