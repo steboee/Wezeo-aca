@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Arrival
+
+# Model Form Field configuration
+form: $/tracker/tracker/models/arrival/fields.yaml
+
+# Model Class name
+modelClass: Tracker\Tracker\Models\Arrival
+
+# Default redirect location
+defaultRedirect: tracker/tracker/arrivals
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: tracker/tracker/arrivals/update/:id
+    redirectClose: tracker/tracker/arrivals
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: tracker/tracker/arrivals
+    redirectClose: tracker/tracker/arrivals
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

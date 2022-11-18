@@ -1,0 +1,16 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+fields:
+    id:
+        label: ID
+        disabled: true
+    name:
+        label: Meno
+
+    arrivals:
+        label: Prichod
+        disabled: true
+        type: relation
+

@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Student
+
+# Model Form Field configuration
+form: $/tracker/tracker/models/student/fields.yaml
+
+# Model Class name
+modelClass: Tracker\Tracker\Models\Student
+
+# Default redirect location
+defaultRedirect: tracker/tracker/students
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: tracker/tracker/students/update/:id
+    redirectClose: tracker/tracker/students
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: tracker/tracker/students
+    redirectClose: tracker/tracker/students
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title
