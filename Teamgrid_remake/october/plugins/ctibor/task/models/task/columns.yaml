@@ -6,9 +6,3 @@ columns:
     id:
         label: ID
         searchable: true
-    student_id:
-        label: User
-    arrival_date: 
-        label: Príchod
-    delayed:
-        label: Meškanie

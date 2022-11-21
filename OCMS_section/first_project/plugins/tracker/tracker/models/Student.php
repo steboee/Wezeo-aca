@@ -69,7 +69,6 @@ class Student extends Model
     //has many arrivals
     public $hasMany = [
         'arrivals' => ['Tracker\Tracker\Models\Arrival']
-
     ];
     public $hasOneThrough = [];
     public $hasManyThrough = [];

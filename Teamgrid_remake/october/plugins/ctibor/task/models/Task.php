@@ -1,20 +1,18 @@
-<?php namespace Tracker\Tracker\Models;
+<?php namespace Ctibor\Task\Models;
 
 use Model;
 
-
-
 /**
- * arrival Model
+ * task Model
  */
-class Arrival extends Model
+class Task extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'tracker_tracker_arrivals';
+    public $table = 'ctibor_task_tasks';
 
     /**
      * @var array Guarded fields
@@ -24,11 +22,7 @@ class Arrival extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [
-        'student_id',
-        'arrival_date',
-        "delayed"
-    ];
+    protected $fillable = [];
 
     /**
      * @var array Validation rules for attributes
@@ -66,14 +60,11 @@ class Arrival extends Model
     /**
      * @var array Relations
      */
-    public $hasOne = [
-    ];
+    public $hasOne = [];
     public $hasMany = [];
     public $hasOneThrough = [];
     public $hasManyThrough = [];
-    public $belongsTo = [
-        "user" => ['Tracker\Tracker\Models\User']
-    ];
+    public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];

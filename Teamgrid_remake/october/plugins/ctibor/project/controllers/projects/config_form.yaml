@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Project
+
+# Model Form Field configuration
+form: $/ctibor/project/models/project/fields.yaml
+
+# Model Class name
+modelClass: Ctibor\Project\Models\Project
+
+# Default redirect location
+defaultRedirect: ctibor/project/projects
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: ctibor/project/projects/update/:id
+    redirectClose: ctibor/project/projects
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: ctibor/project/projects
+    redirectClose: ctibor/project/projects
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title
