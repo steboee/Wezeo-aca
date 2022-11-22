@@ -6,3 +6,16 @@ columns:
     id:
         label: ID
         searchable: true
+    name: 
+        label: Name
+    
+    description:
+        label: Description
+    
+    completed:
+        label: Completed
+
+    due_date:
+        label: Due Date
+
+

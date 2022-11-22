@@ -83,13 +83,35 @@ class Plugin extends PluginBase
     {
 
         return [
-            'task' => [
+            'task' => 
+            [
                 'label'       => 'Task',
                 'url'         => Backend::url('ctibor/task/tasks'),
                 'icon'        => 'icon-leaf',
                 'permissions' => ['ctibor.task.*'],
                 'order'       => 500,
-            ],
+
+            "sideMenu" => [
+                "tasks" => 
+                [
+                    "label" => "Tasks",
+                    "icon" => "icon-leaf",
+                    "url" => Backend::url("ctibor/task/tasks"),
+                    "permissions" => ["ctibor.task.*"],
+                    "order" => 500,
+                ],
+
+                "time_trackers" =>
+                [
+                    "label" => "Time Trackers",
+                    "icon" => "icon-leaf",
+                    "url" => Backend::url("ctibor/task/timetrackers"),
+                    "permissions" => ["ctibor.task.*"],
+                    "order" => 500,
+                ],
+        
+            ]
+            ]
         ];
     }
 }

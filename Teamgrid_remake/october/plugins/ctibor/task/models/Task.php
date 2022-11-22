@@ -1,6 +1,7 @@
 <?php namespace Ctibor\Task\Models;
 
 use Model;
+use ctibor\project\models\Project;
 
 /**
  * task Model
@@ -83,4 +84,10 @@ class Task extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+
+    public function getProjectIdOptions()
+    {
+        return Project::all()->lists('name', 'id');
+    }
 }

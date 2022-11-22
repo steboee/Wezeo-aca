@@ -6,3 +6,20 @@ fields:
     id:
         label: ID
         disabled: true
+
+    name :
+        label: Name
+        required: true
+
+    description:
+        label: Description
+        required: true
+    
+    due_date:
+        label: Due Date
+        type: datepicker
+
+
+    
+
+

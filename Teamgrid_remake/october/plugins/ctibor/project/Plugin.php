@@ -85,11 +85,26 @@ class Plugin extends PluginBase
         return [
             'project' => [
                 'label'       => 'Project',
-                'url'         => Backend::url('ctibor/project/mycontroller'),
+                'url'         => Backend::url('ctibor/project/projects'),
                 'icon'        => 'icon-leaf',
                 'permissions' => ['ctibor.project.*'],
                 'order'       => 500,
+
+                "sideMenu" => [
+                    "projects" => 
+                    [
+                        "label" => "Projects",
+                        "icon" => "icon-leaf",
+                        "url" => Backend::url("ctibor/project/projects"),
+                        "permissions" => ["ctibor.project.*"],
+                        "order" => 500,
+                    ],
+                ],
+
+
+
             ],
+            
         ];
     }
 }

@@ -6,3 +6,14 @@ columns:
     id:
         label: ID
         searchable: true
+    name: 
+        label: name
+        searchable: true
+    description:
+        label: description
+    name:
+        label: name
+        relation: project
+    completed:
+        label : completed
+    

@@ -32,15 +32,4 @@ class Tasks extends Controller
 
         BackendMenu::setContext('Ctibor.Task', 'task', 'tasks');
     }
-
-
-    public function index()
-    {
-        
-    }
-
-    public function create_project()
-    {
-        
-    }
 }
