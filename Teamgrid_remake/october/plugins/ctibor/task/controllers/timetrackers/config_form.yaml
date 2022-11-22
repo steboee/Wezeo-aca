@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Time Tracker
+
+# Model Form Field configuration
+form: $/ctibor/task/models/timetracker/fields.yaml
+
+# Model Class name
+modelClass: Ctibor\Task\Models\TimeTracker
+
+# Default redirect location
+defaultRedirect: ctibor/task/timetrackers
+
+# Create page
+create:
+    title: backend::lang.form.create_title
+    redirect: ctibor/task/timetrackers/update/:id
+    redirectClose: ctibor/task/timetrackers
+
+# Update page
+update:
+    title: backend::lang.form.update_title
+    redirect: ctibor/task/timetrackers
+    redirectClose: ctibor/task/timetrackers
+
+# Preview page
+preview:
+    title: backend::lang.form.preview_title

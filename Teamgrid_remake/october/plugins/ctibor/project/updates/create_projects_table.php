@@ -14,6 +14,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->boolean("completed")->default(false);
+            $table->dateTime("due_date")->nullable();
             $table->timestamps();
         });
     }
