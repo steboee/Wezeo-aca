@@ -16,4 +16,8 @@ columns:
         relation: project
     completed:
         label : completed
+
+    duration_seconds:
+        label: duration_seconds
+
     

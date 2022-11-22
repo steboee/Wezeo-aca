@@ -1,0 +1,9 @@
+{
+    "name": "wuserapi/userapi-plugin",
+    "description": "WUserApi/UserApi plugin. Implements auth API for RainLab.User plugin",
+    "type": "october-plugin",
+    "require": {
+        "composer/installers": "~1.0",
+        "tymon/jwt-auth": "^1.0"
+    }
+}

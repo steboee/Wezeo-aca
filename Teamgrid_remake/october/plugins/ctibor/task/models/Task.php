@@ -27,8 +27,6 @@ class Task extends Model
         'name',
         'description',
         'project_id',
-        'user_id',
-        'completed',
     ];
 
 
@@ -88,6 +86,8 @@ class Task extends Model
 
     public function getProjectIdOptions()
     {
-        return Project::all()->lists('name', 'id');
+        // Projects which are not completed
+        $projects = Project::where('completed', 0)->lists('name', 'id');
+        return $projects;
     }
 }

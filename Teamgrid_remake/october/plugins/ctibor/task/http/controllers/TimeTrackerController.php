@@ -85,6 +85,7 @@ class TimeTrackerController extends Controller
       //Set the task as not tracking
       $task = Task::find($id);
       $task->tracking = False;
+      $task->duration_seconds += $diff_in_seconds;
       $task->save();
 
       return new TimeTrackerResource($time_tracker);

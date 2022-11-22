@@ -19,6 +19,10 @@ fields:
         label: Due Date
         type: datepicker
 
+    completed: 
+        label: Completed
+        type: checkbox
+
 
     
 

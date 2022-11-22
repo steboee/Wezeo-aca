@@ -18,9 +18,9 @@ fields:
 
     project_id:
         relation: project
-        label: Project ID
+        label: Project
         type: dropdown
-        name: Project ID
+        name: Project 
         
 
 
