@@ -17,6 +17,10 @@ columns:
     completed:
         label : completed
 
+    tracking:
+        label : tracking
+
+        
     duration_seconds:
         label: duration_seconds
 

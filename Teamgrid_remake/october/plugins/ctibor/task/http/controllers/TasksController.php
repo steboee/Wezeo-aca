@@ -6,6 +6,7 @@ use ctibor\task\http\resources\TaskResource;
 use Backend\Classes\Controller;
 
 
+
 class TasksController extends Controller
 {
     public function create_task()
@@ -30,8 +31,9 @@ class TasksController extends Controller
     }
     
     public function get_all_tasks()
-    {
-        return TaskResource::collection(Task::all());
+    {   
+        echo("okay");
+        
     }
     
     public function update_task($id)
