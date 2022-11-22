@@ -3,16 +3,16 @@
 use Model;
 
 /**
- * task Model
+ * TimeTracker Model
  */
-class Task extends Model
+class TimeTracker extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'ctibor_task_tasks';
+    public $table = 'ctibor_task_time_trackers';
 
     /**
      * @var array Guarded fields
@@ -61,14 +61,11 @@ class Task extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [
-        'time_trackers' => 'Ctibor\Task\Models\TimeTracker'
-    ];
+    public $hasMany = [];
     public $hasOneThrough = [];
     public $hasManyThrough = [];
     public $belongsTo = [
-        'project' => [Project::class, 'key' => 'project_id'],
-        'user' => [User::class, 'key' => 'user_id']
+        'task' => 'Ctibor\Task\Models\Task'
     ];
     public $belongsToMany = [];
     public $morphTo = [];

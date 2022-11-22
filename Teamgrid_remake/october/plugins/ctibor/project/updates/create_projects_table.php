@@ -10,7 +10,10 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('ctibor_project_projects', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('id');
+            $table->increments('id')->index();
+            $table->string('name');
+            $table->string('description');
+            $table->boolean("completed")->default(false);
             $table->timestamps();
         });
     }

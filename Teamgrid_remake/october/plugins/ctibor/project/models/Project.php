@@ -1,7 +1,7 @@
 <?php namespace Ctibor\Project\Models;
 
 use Model;
-
+use Ctibor\Task\Models\Task;
 /**
  * project Model
  */
@@ -61,7 +61,9 @@ class Project extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [];
+    public $hasMany = [
+        'tasks' => [Task::class, 'key' => 'project_id']
+    ];
     public $hasOneThrough = [];
     public $hasManyThrough = [];
     public $belongsTo = [];

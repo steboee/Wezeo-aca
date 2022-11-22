@@ -11,13 +11,6 @@ class TasksController extends Controller
         $this->bodyClass = 'compact-container';
     }
 
-    public function create_project()
-    {
-        $this->pageTitle = 'Create Project';
-        $this->bodyClass = 'compact-container';
-    }
-
-
     public function create_task()
     {
         $this->pageTitle = 'Create Task';
