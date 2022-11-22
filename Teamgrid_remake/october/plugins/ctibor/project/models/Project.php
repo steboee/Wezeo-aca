@@ -2,6 +2,7 @@
 
 use Model;
 use Ctibor\Task\Models\Task;
+use Rainlab\user\Moedels\user;
 /**
  * project Model
  */
@@ -69,7 +70,9 @@ class Project extends Model
     ];
     public $hasOneThrough = [];
     public $hasManyThrough = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+        "user" => [User::class, "key" => "user_id"]
+    ];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];

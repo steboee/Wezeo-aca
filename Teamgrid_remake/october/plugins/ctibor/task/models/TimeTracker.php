@@ -1,6 +1,10 @@
-<?php namespace Ctibor\Task\Models;
+<?php 
+namespace Ctibor\Task\Models;
 
 use Model;
+use ctibor\project\models\Project;
+use rainlab\user\models\User;
+use ctibor\task\models\Task;
 
 /**
  * TimeTracker Model
@@ -65,7 +69,8 @@ class TimeTracker extends Model
     public $hasOneThrough = [];
     public $hasManyThrough = [];
     public $belongsTo = [
-        'task' => 'Ctibor\Task\Models\Task'
+        'task' => [Task::class, 'key' => 'task_id'],
+        'user' => [User::class, 'key' => 'user_id']
     ];
     public $belongsToMany = [];
     public $morphTo = [];
