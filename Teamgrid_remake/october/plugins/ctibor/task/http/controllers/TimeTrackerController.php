@@ -7,6 +7,10 @@ use ctibor\task\http\resources\TimeTrackerResource;
 use Backend\Classes\Controller;
 use ctibor\task\models\Task;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
+
+
+
 
 
 class TimeTrackerController extends Controller
@@ -14,10 +18,14 @@ class TimeTrackerController extends Controller
 
   public function start_tracking($id)
   {
-    // if tracking exists then create new one 
-    $user_id = reqest("user_id");
+    $user_id = request("user_id");
 
+    $task = Task::find($id);
+    if (!$task) {
+      return \Response::make("Task not found", 404);
+    }
 
+    
     // find  tracking for user which has no end_time
     $tracking = TimeTracker::where('user_id', $user_id)
       ->where('start_time', '<=', Carbon::now())
@@ -41,13 +49,25 @@ class TimeTrackerController extends Controller
     $task->save();
 
     return new TimeTrackerResource($time_tracker);
+    
   }
 
   public function stop_tracking($id)
   {
+
+    $task = Task::find($id);
+    if (!$task) {
+      return \Response::make("Task not found", 404);
+    }
+
     //if timetracker exist create new one
     
-    $time_tracker = TimeTracker::find($id);
+    //find time_tracker for user which has no end_time
+
+    $time_tracker = TimeTracker::where('user_id', request("user_id"))
+      ->where('end_time', '=', NULL)
+      ->where('task_id', $id)
+      ->first();
 
     if ($time_tracker) {
       $time_tracker->user_id = request("user_id");
@@ -72,15 +92,20 @@ class TimeTrackerController extends Controller
     
     else{
 
-      // mesage :  this task does not exist
-
-      return Http::response("this task does not exist", 404);
-
-
+      $task = Task::find($id);
+      if ($task) {
+        return response()->json([
+          'message' => 'This task is not being tracked',
+        ], 404);
+      }
+      else {
+        return response()->json([
+          'message' => 'This task does not exist',
+        ], 404);
+      }
+      
     }
-
-
-  }
+  } 
 
   public function get_all_trackings()
   {
@@ -117,7 +142,7 @@ class TimeTrackerController extends Controller
 
 
 
-  public stop_exact_tracking($id)
+  public function stop_exact_tracking($id)
   {
     $time_tracker = TimeTracker::find($id);
     $time_tracker->end_time = date("Y-m-d H:i:s");
@@ -135,4 +160,5 @@ class TimeTrackerController extends Controller
 
 
 
+}
 }
