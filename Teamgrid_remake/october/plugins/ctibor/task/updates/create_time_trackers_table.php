@@ -15,7 +15,7 @@ class CreateTimeTrackersTable extends Migration
             $table->integer('user_id')->index();
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
-            $table->integer("duration_seconds") ->nullable();
+            $table->integer("duration_seconds")->nullable();
             $table->timestamps();
         });
     }

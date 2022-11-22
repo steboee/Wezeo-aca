@@ -3,3 +3,8 @@
 
 1.0.2:
 - Updated tables and models relations
+
+1.0.3:
+- create_tasks_table.php
+- create_time_trackers_table.php
+

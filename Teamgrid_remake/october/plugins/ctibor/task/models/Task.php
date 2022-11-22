@@ -22,7 +22,15 @@ class Task extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'description',
+        'project_id',
+        'user_id',
+        'completed',
+        "tracking"
+    ];
+
 
     /**
      * @var array Validation rules for attributes
