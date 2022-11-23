@@ -1,6 +1,6 @@
 <?php
 
-namespace ctibor\project\http\resources;
+namespace Ctibor\Project\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

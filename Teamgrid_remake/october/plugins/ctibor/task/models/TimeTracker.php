@@ -2,9 +2,9 @@
 namespace Ctibor\Task\Models;
 
 use Model;
-use ctibor\project\models\Project;
-use rainlab\user\models\User;
-use ctibor\task\models\Task;
+use Ctibor\Project\Models\Project;
+use Rainlab\User\Models\User;
+use Ctibor\Task\Models\Task;
 
 /**
  * TimeTracker Model

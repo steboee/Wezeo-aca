@@ -1,13 +1,14 @@
 <?php
 
-namespace ctibor\task\http\controllers;
+namespace Ctibor\Task\Http\Controllers;
 
-use ctibor\task\models\TimeTracker;
-use ctibor\task\http\resources\TimeTrackerResource;
+use Ctibor\Task\Models\TimeTracker;
+use Ctibor\Task\http\resources\TimeTrackerResource;
 use Backend\Classes\Controller;
-use ctibor\task\models\Task;
+use Ctibor\Task\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
+use Ctibor\Task\Http\Services\TimeTrackerService;
 
 
 
@@ -18,45 +19,23 @@ class TimeTrackerController extends Controller
 
   public function start_tracking($id)
   {
-    $user_id = request("user_id");
-
-    $task = Task::find($id);
-    if (!$task) {
-      return \Response::make("Task not found", 404);
-    }
-
-    
-    // find  tracking for user which has no end_time
-    $tracking = TimeTracker::where('user_id', $user_id)
-      ->where('start_time', '<=', Carbon::now())
-      ->where('end_time', '==', Null)
-      ->first();
-
-    if ($tracking) {
-      stop_exact_tracking($tracking->id);
-    }
-
-    $time_tracker = new TimeTracker;
-    $time_tracker->user_id = request("user_id");
-    $time_tracker->task_id = $id;
-    $time_tracker->start_time = date("Y-m-d H:i:s");
-    $time_tracker->end_time = null;
-    $time_tracker->save();
-
-    //Set the task as tracking
-    $task = Task::find($id);
-    $task->tracking = True;
-    $task->save();
+    $tracking = TimeTrackerService::start_tracking($id);
 
     return new TimeTrackerResource($time_tracker);
     
   }
 
+
+
+
+
+
+
   public function stop_tracking($id)
   {
 
-    $task = Task::find($id);
-    if (!$task) {
+    $Task = Task::find($id);
+    if (!$Task) {
       return \Response::make("Task not found", 404);
     }
 
@@ -65,13 +44,18 @@ class TimeTrackerController extends Controller
     //find time_tracker for user which has no end_time
 
     $time_tracker = TimeTracker::where('user_id', request("user_id"))
-      ->where('end_time', '=', NULL)
-      ->where('task_id', $id)
+      ->whereNull('end_time')
+      ->where('Task_id', $id)
       ->first();
 
-    if ($time_tracker) {
-      $time_tracker->user_id = request("user_id");
-      $time_tracker->task_id = $id;
+    if (!$time_tracker) {
+        return response()->json([
+          'message' => 'This Task is not being tracked',
+        ], 404);
+    }
+  
+    $time_tracker->user_id = request("user_id");
+      $time_tracker->Task_id = $id;
       $time_tracker->end_time = date("Y-m-d H:i:s");
 
 
@@ -82,30 +66,15 @@ class TimeTrackerController extends Controller
       $time_tracker->duration_seconds = $diff_in_seconds;
       $time_tracker->save();
 
-      //Set the task as not tracking
-      $task = Task::find($id);
-      $task->tracking = False;
-      $task->duration_seconds += $diff_in_seconds;
-      $task->save();
+      //Set the Task as not tracking
+      $Task = Task::find($id);
+      $Task->tracking = False;
+      $Task->duration_seconds += $diff_in_seconds;
+      $Task->save();
 
       return new TimeTrackerResource($time_tracker);
-    }
-    
-    else{
 
-      $task = Task::find($id);
-      if ($task) {
-        return response()->json([
-          'message' => 'This task is not being tracked',
-        ], 404);
-      }
-      else {
-        return response()->json([
-          'message' => 'This task does not exist',
-        ], 404);
-      }
-      
-    }
+
   } 
 
   public function get_all_trackings()
@@ -116,11 +85,11 @@ class TimeTrackerController extends Controller
   public function update_tracking($id)
   {
     $user = request("user_id");
-    $task_owner = TimeTracker::find($id)->task->user_id;
+    $Task_owner = TimeTracker::find($id)->Task->user_id;
 
-    if ($user == $task_owner) {
+    if ($user == $Task_owner) {
       $time_tracker = TimeTracker::find($id);
-      $time_tracker->task_id = request("task_id");
+      $time_tracker->Task_id = request("Task_id");
       $time_tracker->user_id = request("user_id");
       $time_tracker->start_time = request("start_time");
       $time_tracker->end_time = request("end_time");
@@ -129,14 +98,14 @@ class TimeTrackerController extends Controller
       return new TimeTrackerResource($time_tracker);
     } else {
       return response()->json([
-        "message" => "You are not the owner of this task"
+        "message" => "You are not the owner of this Task"
       ], 403);
     }
   }
 
-  public function get_task_trackings($id)
+  public function get_Task_trackings($id)
   {
-    return TimeTrackerResource::collection(TimeTracker::where("task_id", $id)->get());
+    return TimeTrackerResource::collection(TimeTracker::where("Task_id", $id)->get());
   }
 
 
@@ -154,10 +123,10 @@ class TimeTrackerController extends Controller
     $time_tracker->duration_seconds = $diff_in_seconds;
     $time_tracker->save();
 
-    //Set the task as not tracking
-    $task = Task::find($time_tracker->task_id);
-    $task->tracking = False;
-    $task->save();
+    //Set the Task as not tracking
+    $Task = Task::find($time_tracker->Task_id);
+    $Task->tracking = False;
+    $Task->save();
 
 
 

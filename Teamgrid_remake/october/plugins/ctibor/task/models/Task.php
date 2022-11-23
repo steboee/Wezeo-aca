@@ -1,7 +1,7 @@
 <?php namespace Ctibor\Task\Models;
 
 use Model;
-use ctibor\project\models\Project;
+use Ctibor\Project\Models\Project;
 
 /**
  * task Model

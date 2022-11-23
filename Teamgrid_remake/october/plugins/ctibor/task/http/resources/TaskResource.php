@@ -1,5 +1,5 @@
 <?php
-namespace Ctibor\task\Http\Resources;
+namespace Ctibor\Task\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 

@@ -1,5 +1,5 @@
 <?php
-  namespace ctibor\project\http\controllers;
+  namespace Ctibor\Project\Http\Controllers;
   use Backend\Controllers\BackendController;
   use Backend\Classes\Controller;
   use ctibor\project\models\Project;
@@ -8,57 +8,49 @@
 
   class ProjectsController extends Controller
   {
+
+
+    public function index()
+    {
+      return ProjectResource::collection(Project::all());
+    }
    
-    public function create_project()
+    public function store()
     {
       $project = new Project;
-      $project->name = request("name");
-      $project->description = request("description");
-      $project->completed = request("completed");
-      $project->due_date = request("due_date");
+      $project->fill(request()->all());
       $project->save();
       return new ProjectResource($project);
     }
 
 
-    public function get_project($id)
+    public function show($id)
     {
       return new ProjectResource(Project::find($id));
     }
 
-    public function get_all_projects()
-    {
-      return ProjectResource::collection(Project::all());
-    }
 
-    public function update_project($id)
+    public function update($id)
     {
-      $project = Project::find($id);
-      $project->name = request("name");
-      $project->description = request("description");
-      $project->completed = request("completed");
-      $project->due_date = request("due_date");
-      $project->save();
+      $project = Project::findOrFail($id);
+      $project->fill(request()->all());
       return new ProjectResource($project);
     }
 
-    public function complete_project($id)
-    {
-      $project = Project::find($id);
-      $project->completed = true;
-      $project->save();
-      return new ProjectResource($project);
-    }
 
-    public function delete_project($id)
+    public function delete($id)
     {
-      $project = Project::find($id);
+      $project = Project::findOrFail($id);
       $project->delete();
       return new ProjectResource($project);
     }
 
-    
 
+    public function show_tasks($id)
+    {
+      $project = Project::findOrFail($id);
+      return $project->tasks;
+    }
 
 
   }

@@ -8,27 +8,29 @@ use ctibor\task\Task;
 use ctibor\Core\Config;
 use WUserApi\UserApi\Http\Middlewares;
 
+Route::prefix('api')->group(function () {
+    // group routes by middleware
+    Route::middleware('WUserApi\UserApi\Http\Middlewares\Authenticate')->group(function () {
+        Route::post('tasks', [TasksController::class, 'store']);
+        Route::get('tasks/{id}', [TasksController::class, 'show']);
+        Route::get('tasks', [TasksController::class, 'index']);
+        Route::put('tasks/{id}', [TasksController::class, 'update']);
+        Route::delete('tasks/{id}', [TasksController::class, 'delete']);
+        Route::post('tasks/{id}/start_tracking', [TimeTrackerController::class, 'start_tracking']);
+        Route::post('tasks/{id}/stop_tracking', [TimeTrackerController::class, 'stop_tracking']);
+
+        Route::get("time_trackings", [TimeTrackerController::class, 'index']);
+        Route::get("time_trackings/{id}", [TimeTrackerController::class, 'show']);
+        Route::post("time_trackings", [TimeTrackerController::class, 'store']);
+        Route::put("time_trackings/{id}", [TimeTrackerController::class, 'update']);
+        Route::delete("time_trackings/{id}", [TimeTrackerController::class, 'delete']);
+    });
+});
 
 
 
-Route::middleware(["Authenticate"]) -> group(function(){
-  Route::post("api/create_task",[TasksController::class, "create_task"]);
-  Route::get("api/tasks/{id}",[TasksController::class, "get_task"]);
-  Route::get("api/project_tasks/{id}",[TasksController::class, "get_project_tasks"]);
-  Route::get("api/tasks",[TasksController::class, "get_all_tasks"]);
-  Route::get("api/my-tasks",[TasksController::class, "get_my_tasks"]);
-  Route::put("api/tasks/{id}",[TasksController::class, "update_task"]);
-  Route::put("api/tasks/{id}/complete",[TasksController::class, "complete_task"]);
-  Route::delete("api/tasks/{id}",[TasksController::class, "delete_task"]);
-  });
 
 
-
-Route::post("api/start_tracking/{id}",[TimeTrackerController::class, "start_tracking"]);
-Route::post("api/stop_tracking/{id}",[TimeTrackerController::class, "stop_tracking"]);
-Route::get("api/tracking/{id}",[TimeTrackerController::class, "get_task_trackings"]);
-Route::get("api/tracking",[TimeTrackerController::class, "get_all_trackings"]);
-Route::put("api/tracking/{id}",[TimeTrackerController::class, "update_tracking"]);
 
 
 

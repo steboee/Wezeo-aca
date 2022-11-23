@@ -1,13 +1,19 @@
 <?php
 
-
 use Backend\Classes\Controller;
-use ctibor\project\models\Project;
-use ctibor\project\http\controllers\ProjectsController;
+use Ctibor\Project\Models\Project;
+use Ctibor\Project\Http\Controllers\ProjectsController;
+use WUserApi\UserApi\Http\Middlewares\Authenticate;
 
-Route::post("api/create-project",[ProjectsController::class, "create_project"]);
-Route::get("api/projects/{id}",[ProjectsController::class, "get_project"]);
-Route::get("api/projects",[ProjectsController::class, "get_all_projects"]);
-Route::put("api/projects/{id}",[ProjectsController::class, "update_project"]);
-Route::put("api/projects/{id}",[ProjectsController::class, "complete_project"]);
-Route::delete("api/projects/{id}",[ProjectsController::class, "delete_project"]);
+// middleware mi nebralo tak , tak som ho zatial dal len takto
+Route::prefix('api')->group(function () {
+    // group routes by middleware
+    Route::middleware('WUserApi\UserApi\Http\Middlewares\Authenticate')->group(function () {
+        Route::post('projects', [ProjectsController::class, 'store']);
+        Route::get('projects/{id}', [ProjectsController::class, 'show']);
+        Route::get('projects', [ProjectsController::class, 'index']);
+        Route::put('projects/{id}', [ProjectsController::class, 'update']);
+        Route::delete('projects/{id}', [ProjectsController::class, 'delete']);
+        Route::get('projects/{id}/tasks', [ProjectsController::class, 'show_tasks']);
+    });
+});
