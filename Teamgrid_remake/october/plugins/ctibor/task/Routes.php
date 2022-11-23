@@ -6,18 +6,22 @@ use ctibor\task\http\controllers\TimeTrackerController;
 use ctibor\task\Http\Controllers\TasksController;
 use ctibor\task\Task;
 use ctibor\Core\Config;
+use WUserApi\UserApi\Http\Middlewares;
 
 
 
-Route::middleware(["auth"])->group (function() {
+
+Route::middleware(["Authenticate"]) -> group(function(){
   Route::post("api/create_task",[TasksController::class, "create_task"]);
   Route::get("api/tasks/{id}",[TasksController::class, "get_task"]);
   Route::get("api/project_tasks/{id}",[TasksController::class, "get_project_tasks"]);
   Route::get("api/tasks",[TasksController::class, "get_all_tasks"]);
+  Route::get("api/my-tasks",[TasksController::class, "get_my_tasks"]);
   Route::put("api/tasks/{id}",[TasksController::class, "update_task"]);
-  Route::put("api/tasks/{id}",[TasksController::class, "complete_task"]);
+  Route::put("api/tasks/{id}/complete",[TasksController::class, "complete_task"]);
   Route::delete("api/tasks/{id}",[TasksController::class, "delete_task"]);
-});
+  });
+
 
 
 Route::post("api/start_tracking/{id}",[TimeTrackerController::class, "start_tracking"]);

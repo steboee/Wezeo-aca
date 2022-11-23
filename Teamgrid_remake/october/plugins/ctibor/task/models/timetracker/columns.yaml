@@ -9,8 +9,19 @@ columns:
     task_id: 
         label: Task ID
         searchable: true
+
+    name:
+        Label: Task
+        relation: task
+        valueFrom: name
+    
     user_id:
         label: User id
+
+    user_name: 
+        label: User
+        relation: user
+        valueFrom: name
     start_time:
         label: Start Time
 
