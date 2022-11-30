@@ -6,12 +6,27 @@ fields:
     id:
         label: ID
         disabled: true
+
+    _project:
+
+        label: Project
+        type: dropdown
+
+
+    task:
+        label: Task
+        type: dropdown
+        dependsOn: _project
+
     
     start_time:
         label: Start Time
-        type: text
+        type: datepicker
+        mode: datetime
         format: Y-m-d H:i:s
 
     end_time:
         label: End Time
-        type: 
+        type: datepicker
+        mode: datetime
+        format: Y-m-d H:i:s 

@@ -64,7 +64,7 @@ class TasksController extends Controller
     //
     public function get_my_tasks()
     {
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::getUser();
         $tasks = Task::where('user_id', $user->id)->get();
 
         return TaskResource::collection($tasks);
@@ -86,6 +86,7 @@ class TasksController extends Controller
         $task = Task::findOrFail($id);
 
         if ($user->id != $task->user_id) {
+            return response("Casca");
             return \Response::make("You are not allowed to update this task", 403);
         }
 

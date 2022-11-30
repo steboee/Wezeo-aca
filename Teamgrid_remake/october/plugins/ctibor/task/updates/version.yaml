@@ -8,3 +8,6 @@
 - create_tasks_table.php
 - create_time_trackers_table.php
 
+1.0.4:
+- added on delete cascade to task_id in time_trackers table
+

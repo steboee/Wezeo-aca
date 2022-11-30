@@ -2,6 +2,8 @@
 
 use Backend;
 use System\Classes\PluginBase;
+use Event;
+
 
 /**
  * Task Plugin Information File
@@ -31,6 +33,7 @@ class Plugin extends PluginBase
     public function register()
     {
 
+
     }
 
     /**
@@ -40,7 +43,9 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        Event::listen('getting_arrivals',function($timeTracker) {
+            echo('getting_arrivals');
+        });
     }
 
     /**
@@ -83,7 +88,7 @@ class Plugin extends PluginBase
     {
 
         return [
-            'task' => 
+            'task' =>
             [
                 'label'       => 'Task',
                 'url'         => Backend::url('ctibor/task/tasks'),
@@ -92,7 +97,7 @@ class Plugin extends PluginBase
                 'order'       => 500,
 
             "sideMenu" => [
-                "tasks" => 
+                "tasks" =>
                 [
                     "label" => "Tasks",
                     "icon" => "icon-leaf",
@@ -109,7 +114,7 @@ class Plugin extends PluginBase
                     "permissions" => ["ctibor.task.*"],
                     "order" => 500,
                 ],
-        
+
             ]
             ]
         ];

@@ -9,6 +9,7 @@ use Ctibor\Task\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Ctibor\Task\Http\Services\TimeTrackerService;
+use WuserApi\Userapi\Facades\JWTAuth;
 
 
 
@@ -34,6 +35,7 @@ class TimeTrackerController extends Controller
   public function stop_tracking($id)
   {
 
+    $user = JWTAuth::parseToken()->authenticate();
     $Task = Task::find($id);
     if (!$Task) {
       return \Response::make("Task not found", 404);
@@ -43,9 +45,9 @@ class TimeTrackerController extends Controller
     
     //find time_tracker for user which has no end_time
 
-    $time_tracker = TimeTracker::where('user_id', request("user_id"))
+    $time_tracker = TimeTracker::where('user_id', $user->id)
       ->whereNull('end_time')
-      ->where('Task_id', $id)
+      ->where('task_id', $id)
       ->first();
 
     if (!$time_tracker) {
@@ -54,7 +56,7 @@ class TimeTrackerController extends Controller
         ], 404);
     }
   
-    $time_tracker->user_id = request("user_id");
+    $time_tracker->user_id = $user->id;
       $time_tracker->Task_id = $id;
       $time_tracker->end_time = date("Y-m-d H:i:s");
 

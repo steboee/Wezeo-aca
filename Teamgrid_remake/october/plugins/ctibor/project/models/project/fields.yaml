@@ -11,6 +11,11 @@ fields:
         label: Name
         required: true
 
+
+    task:
+        label: Task
+        type: dropdown
+
     description:
         label: Description
         required: true

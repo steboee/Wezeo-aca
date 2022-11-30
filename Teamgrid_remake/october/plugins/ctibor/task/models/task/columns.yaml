@@ -9,6 +9,12 @@ columns:
     name: 
         label: name
         searchable: true
+    project:
+        label: Project
+        relation: project
+        searchable: true
+        select: name
+        
     description:
         label: description
     name:

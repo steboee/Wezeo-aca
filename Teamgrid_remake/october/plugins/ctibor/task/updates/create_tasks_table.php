@@ -13,7 +13,7 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->integer('project_id')->index();
+            $table->integer('project_id')->references('id')->on('ctibor_project_projects')->index();
             $table->integer('user_id')->index()->nullable();
             $table->boolean("completed")->default(false)->nullable();
             $table->dateTime("due_date")->nullable();

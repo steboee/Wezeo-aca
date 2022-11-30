@@ -8,6 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use WuserApi\Userapi\Facades\JWTAuth;
+use Ctibor\Task\Http\Resources;
+
 
 
 
@@ -15,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 class TimeTrackerService
 {
 
-  public function start_tracking($id)
+  public static function start_tracking($id)
   {
     $user = JWTAuth::parseToken()->authenticate();
 
@@ -37,7 +40,7 @@ class TimeTrackerService
     }
 
     $time_tracker = new TimeTracker;
-    $time_tracker->user_id = request("user_id");
+    $time_tracker->user_id = $user->id;
     $time_tracker->Task_id = $id;
     $time_tracker->start_time = date("Y-m-d H:i:s");
     $time_tracker->end_time = null;

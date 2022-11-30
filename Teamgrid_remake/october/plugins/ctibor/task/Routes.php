@@ -7,10 +7,11 @@ use Ctibor\Task\Http\Controllers\TasksController;
 use Ctibor\Task\Task;
 use Ctibor\Core\Config;
 use WUserApi\UserApi\Http\Middlewares;
+use WUserApi\UserApi\Http\Middlewares\Authenticate;
 
 Route::prefix('api')->group(function () {
     // group routes by middleware
-    Route::middleware('WUserApi\UserApi\Http\Middlewares\Authenticate')->group(function () {
+    Route::middleware(Authenticate::class)->group(function () {
         Route::post('Tasks', [TasksController::class, 'store']);
         Route::get('Tasks/{id}', [TasksController::class, 'show']);
         Route::get('Tasks', [TasksController::class, 'index']);

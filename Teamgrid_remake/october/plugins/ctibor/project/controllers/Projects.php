@@ -2,7 +2,10 @@
 
 use BackendMenu;
 use Backend\Classes\Controller;
-
+use WuserApi\Userapi\Facades\JWTAuth;
+use Ctibor\Project\Models\Project;
+use Ctibor\Project\Http\Resources\ProjectResource;
+use RainLab\User\Models\User;
 /**
  * Projects Back-end Controller
  */
@@ -32,4 +35,14 @@ class Projects extends Controller
 
         BackendMenu::setContext('Ctibor.Project', 'project', 'projects');
     }
+
+
+    // on create
+    public function formBeforeCreate($model)
+    {
+     
+
+    }
+    
+
 }

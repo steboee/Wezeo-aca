@@ -5,6 +5,7 @@ use Model;
 use Ctibor\Project\Models\Project;
 use Rainlab\User\Models\User;
 use Ctibor\Task\Models\Task;
+use Carbon\Carbon;
 
 /**
  * TimeTracker Model
@@ -33,25 +34,8 @@ class TimeTracker extends Model
      */
     public $rules = [];
 
-    /**
-     * @var array Attributes to be cast to native types
-     */
-    protected $casts = [];
+    
 
-    /**
-     * @var array Attributes to be cast to JSON
-     */
-    protected $jsonable = [];
-
-    /**
-     * @var array Attributes to be appended to the API representation of the model (ex. toArray())
-     */
-    protected $appends = [];
-
-    /**
-     * @var array Attributes to be removed from the API representation of the model (ex. toArray())
-     */
-    protected $hidden = [];
 
     /**
      * @var array Attributes to be cast to Argon (Carbon) instances
@@ -78,4 +62,61 @@ class TimeTracker extends Model
     public $morphMany = [];
     public $attachOne = [];
     public $attachMany = [];
+
+
+
+
+    // update tracked_time in task after timetracker changed
+    public function beforeUpdate(){
+        $start = Carbon::parse($this->start_time);
+        $end = Carbon::parse($this->end_time);
+        $diff_in_seconds = $start->diffInSeconds($end);
+        $this->duration_seconds = $diff_in_seconds;
+    }
+
+
+
+    // update TASK - duration seconds when timetracker changed 
+    public function afterUpdate()
+    {
+        $task = $this->task;
+        $task->duration_seconds = $task->time_trackers->sum('duration_seconds');
+        $task->save();
+    }
+
+
+
+    // after timetracker was deleted change TASK->duration seconds
+    public function afterDelete()
+    {
+        $task = $this->task;
+        $task->duration_seconds = $task->time_trackers->sum('duration_seconds');
+        $task->save();
+    }
+
+
+    public function getProjectOptions(){
+        
+        return Project::all()->lists('name', 'id');
+    }
+
+
+    // dropdown for backend form
+    public function getTaskOptions()
+    {   
+        $tasks = Task::all();
+        if ($this->_project){
+            $project_id = $this->_project;
+            $tasks = $tasks->where('project_id', $project_id);
+            return $tasks->lists('name', 'id');
+        }
+        else{
+            return $tasks->lists('name', 'id');
+        }
+        return [];   
+    }
+
+    
+
+
 }

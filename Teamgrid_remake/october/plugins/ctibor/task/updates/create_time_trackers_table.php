@@ -11,7 +11,7 @@ class CreateTimeTrackersTable extends Migration
         Schema::create('ctibor_task_time_trackers', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->integer('task_id')->index();
+            $table->integer('task_id')->references('id')->on('ctibor_task_tasks')->index();
             $table->integer('user_id')->index();
             $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();

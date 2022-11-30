@@ -90,4 +90,11 @@ class Task extends Model
         $projects = Project::where('completed', 0)->lists('name', 'id');
         return $projects;
     }
+
+    public function scopeFilterMake($query, $parent){
+        if ($parent->project) {
+            $query = $query->where('id', $parent->project_id);
+        }
+        return $query;
+        }
 }
